@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import random
 
 class Talks(commands.Cog):
     
@@ -20,5 +21,16 @@ class Talks(commands.Cog):
         except discord.errors.Forbidden:
             await ctx.send('Não foi possivel enviar a mensagem, habilite receber mensagens de qualquer pessoa do servidor (Opções > Privacidade)')
     
+    @commands.command(name="d20")
+    async def roll_dice(self, ctx):
+        num_random = random.randint(1,20)
+        embed_dado = discord.Embed(
+            title=':game_die: Dados Rolados!',
+            description= (f'[***d20*** : {num_random}]'),
+            color= 0x030bfc
+        )
+        embed_dado.set_footer(text=f"Dado rolado por ***{ctx.author}***")
+        await ctx.send(embed=embed_dado)
+        
 async def setup(bot):
     await bot.add_cog(Talks(bot))
